@@ -14,11 +14,15 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 from datetime import timedelta
 import logging
-import environ
-# Initialise environment variables
-env = environ.Env()
+from dotenv import load_dotenv
 
-environ.Env.read_env(os.path.join('.env'))
+load_dotenv()
+# import environ
+# # Initialise environment variables
+# env = environ.Env()
+
+# environ.Env.read_env(os.path.join('.env'))
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -35,21 +39,33 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Application definition
 
-INSTALLED_APPS = [
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+]
+
+THIRD_PARTY_APP =[
     'rest_framework',
     'corsheaders',
-    'account',
     'rest_framework.authtoken',
     'django_celery_results',
     'django_celery_beat',
     'channels'
 ]
+
+APPS = [
+    'account'
+]
+
+
+INSTALLED_APPS = THIRD_PARTY_APP + APPS + DJANGO_APPS
+
+SITE_ID = 1
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -185,7 +201,7 @@ LOGGING = {
         'file': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': 'partytime.log',
+            'filename': 'Template.log',
             'formatter': 'verbose',
         },
     },
